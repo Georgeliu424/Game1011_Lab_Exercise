@@ -1,4 +1,5 @@
 #include<iostream>
+#include <vector>
 using namespace std;
 
  class Achievements
@@ -11,37 +12,27 @@ using namespace std;
 
 
  public:
-	 Achievements()
+	 Achievements(string Title,string Description, int scoreValue)
 	 {
-
+		 this->Titile = Title;
+		 this->Description = Description;
+		 this->scoreValue = scoreValue;
 	 }
 
-	 void SetTitle(string GameTitle)
-	 {
-		 Titile = GameTitle;
-	 }
-	 string GetTitle()
+
+	 string GetTitle() const
 	 {
 		 return Titile;
 	 }
 
 
-	 void SetDescription (string description)
-	 {
-		 Description = description;
-	 }
-
-	 string GetDescription()
+	 string GetDescription() const
 	 {
 		 return Description;
 	 }
 
-	 int SetScore(int AchivementScore)
-	 {
-		 scoreValue = AchivementScore;
-	 }
 	 
-	 int GetScore()
+	 int GetscoreValue()
 	 {
 		 return scoreValue;
 	 }
@@ -61,43 +52,38 @@ private:
 
 
 public:
-	Games()
+	Games(string gameName, string publisher, string developer, int achievementCount)
 	{
-		
+		this->name = name;
+		this->publisher = publisher;
+		this->developer = developer;
+		this->achievementCount = achievementCount;
 	}
-	void setName( string GameName)
-	{
-		name = GameName;
-	}
+	
 	string GetName()
 	{
 		return name;
 	}
 
-	void setPublisher(string newPublisher)
+	string GetGame() const
 	{
-		publisher = newPublisher;
+		return name;
 	}
 
-	string GetPublisher()
+	string GetPublisher() const
 	{
 		return publisher;
 	}
-	void setDeveloper(string newDeveloper)
-	{
-		developer = newDeveloper;
-	}
-	string GetDeveloper()
+
+	std::string GetDeveloperName() const
 	{
 		return developer;
 	}
 
-	void SetAchievements(Achievements*achievements,int achievementCount)
+	int GetAchievementCount() const
 	{
-		this->achievements = achievements;
-		this->achievementCount = achievementCount;
+		return achievementCount;
 	}
-
 
 
 };
@@ -105,44 +91,50 @@ public:
 class Platform
 {
 private:
-	string name;
+	string platformName;
 	string Manufacturer;
 	int gameCount;
-	Games* games;
 
 public:
-	void setGame(Games* games, int getGameCount)
+	Platform(string platformName, string Manufacturer, int gameCount)
 	{
-		games = games;
-		gameCount = getGameCount;
+		this->platformName = platformName;
+		this->Manufacturer = Manufacturer;
+		this->gameCount = gameCount;
 	}
 
-	void setName(string platformName)
+	string GetPlatformName() const
 	{
-		name = platformName;
+		return platformName;
 	}
 
-	string GetName()
-	{
-		return name;
-	}
-	void setManufacturer(string ManufacturerName)
-	{
-		Manufacturer = ManufacturerName;
-	}
-	string GetManufacturer()
+	string GetManufacturerName() const
 	{
 		return Manufacturer;
 	}
 
+	int GetGameCount() const
+	{
+		return gameCount;
+	}
 
 };
 
 int main()
 {
+	string platformName;
+	string ManufacturerName;
+	int gameCount;
 
+	cout << "Welcome to achievement tracker system.\n";
+	cout << " Please Enter your Platform Name :";
+	cin >> platformName;
+	cout << "Please Enter your Manufacturer Name :";
+	cin >> ManufacturerName;
+	cout << "Number of games in platform '" << platformName << "': ";
+	cin >> gameCount;
 
-
+	Platform* platform = new Platform(platformName, ManufacturerName, gameCount);
 
 
 
