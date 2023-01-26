@@ -12,12 +12,21 @@ using namespace std;
 
 
  public:
-	 Achievements(string Title,string Description, int scoreValue)
-	 {
-		 this->Titile = Title;
-		 this->Description = Description;
-		 this->scoreValue = scoreValue;
-	 }
+		void setTitle(string title)
+		{
+			this->Titile = title;
+		}
+
+		void setDescription(string description)
+		{
+			this->Description = description;
+		}
+
+		void setScore(int scorevalue)
+		{
+			this->scoreValue = scorevalue;
+		}
+
 
 
 	 string GetTitle() const
@@ -43,31 +52,38 @@ using namespace std;
 class Games
 {
 private:
-	string name;
+	string gamename;
 	string publisher;
 	string developer;
-	
-	Achievements* achievements;
+
 	int achievementCount;
 
 
 public:
-	Games(string gameName, string publisher, string developer, int achievementCount)
+	void setGamename(string gamename)
 	{
-		this->name = name;
-		this->publisher = publisher;
-		this->developer = developer;
-		this->achievementCount = achievementCount;
+		this->gamename = gamename;
 	}
 	
-	string GetName()
+	void setPublisher(string publisher)
 	{
-		return name;
+		this->publisher = publisher;
 	}
 
-	string GetGame() const
+	void setDeveloper(string developer)
 	{
-		return name;
+		this->developer = developer;
+	}
+
+	void setAchievementCount(int achievementCount)
+	{
+		this->achievementCount = achievementCount;
+	}
+
+
+	string GetGamename() const
+	{
+		return gamename;
 	}
 
 	string GetPublisher() const
@@ -75,7 +91,7 @@ public:
 		return publisher;
 	}
 
-	std::string GetDeveloperName() const
+	std::string GetDeveloper() const
 	{
 		return developer;
 	}
@@ -93,50 +109,134 @@ class Platform
 private:
 	string platformName;
 	string Manufacturer;
-	int gameCount;
+
 
 public:
-	Platform(string platformName, string Manufacturer, int gameCount)
+	void setplatformName(string platformName)
 	{
 		this->platformName = platformName;
-		this->Manufacturer = Manufacturer;
-		this->gameCount = gameCount;
 	}
+
+	void setManufacturer(string Manufacturer)
+	{
+		this->Manufacturer = Manufacturer;
+	}
+
+
 
 	string GetPlatformName() const
 	{
 		return platformName;
 	}
 
-	string GetManufacturerName() const
+	string GetManufacturer() const
 	{
 		return Manufacturer;
 	}
 
-	int GetGameCount() const
-	{
-		return gameCount;
-	}
 
 };
 
 int main()
 {
+	string word;
 	string platformName;
 	string ManufacturerName;
-	int gameCount;
+	int gameCount =0;
+	int PlatformCount = 0;
+	int achievement = 0;
+	int score;
+
+	bool inputnumber =0;
+
+	Platform* platform = new Platform;
 
 	cout << "Welcome to achievement tracker system.\n";
-	cout << " Please Enter your Platform Name :";
+	cout << "Please input your Platform Name :" << endl;
 	cin >> platformName;
-	cout << "Please Enter your Manufacturer Name :";
+	platform->setplatformName(platformName);
+
+	cout<< "who makes the " << platform->GetPlatformName() << ": ";
 	cin >> ManufacturerName;
-	cout << "Number of games in platform '" << platformName << "': ";
+	platform->setManufacturer(ManufacturerName);
+
+	cout<<"How many games dose"<< platform->GetPlatformName() << " have : (enter a number at least 5) ";
 	cin >> gameCount;
 
-	Platform* platform = new Platform(platformName, ManufacturerName, gameCount);
+	while (!inputnumber)
+	{
+		if (gameCount < 5)
+		{
+			std::cout << "Please Try again : ";
+			std::cin >> gameCount;
+			inputnumber = false;
+		}
+		else
+		{
+			inputnumber = true;
+		}
+	}
+	inputnumber = false;
+
+	Games* games = new Games[gameCount];
+	Achievements** achievements = new Achievements * [gameCount];
 
 
+	cout << "Please input the following information for " << gameCount << "games:" << endl;
+
+	for (int i = 0; i < gameCount; i++)
+	{
+		cout << "Title for game " << i++ <<":" << endl;
+		cin >> word;
+		games[i].setGamename(word);
+
+		cout<<" who is the Developer for  "<< games[i].GetGamename() << ": ";
+		cin >> word;
+		games[i].setDeveloper(word);
+
+		cout<<"who is the Publisher for  "<<games[i].GetGamename() << ": ";
+		cin >> word;
+		games[i].setPublisher(word);
+
+		cout << endl;
+
+		cout << "How many achievements dose " << games[i].GetGamename() << " have (enter a number at least 5) :";
+		cin >> achievement;
+
+		while (!inputnumber)
+		{
+			if (achievement < 5)
+			{
+				std::cout << "Please Try again : ";
+				std::cin >> achievement;
+				inputnumber = false;
+			}
+			else
+			{
+				inputnumber = true;
+			}
+		}
+		inputnumber = false;
+		games[i].setAchievementCount(achievement);
+		achievements[i] = new Achievements[achievement];
+
+		cout << endl;
+		for (int j=0;j<achievement;j++)
+		{
+			cout << "Title :" << j + 1 << ":";
+			cin >> word;
+			achievements[i][j].setTitle(word);
+			cout<<"Description for "<<achievements[i][j].GetTitle()<<" : ";
+			cin >> word;
+			achievements[i][j].setDescription(word);
+			cout << "Score for " << achievements[i][j].GetTitle() << " : ";
+			cin >> score;
+			achievements[i][j].setScore(score);
+			cout << endl;
+
+		}
+
+	}
 
 	return 0;
 }
